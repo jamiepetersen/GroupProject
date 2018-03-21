@@ -1,21 +1,38 @@
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
 import java.awt.Color;
-import java.awt.SystemColor;
-import javax.swing.JButton;
-import javax.swing.JTextField;
+import java.awt.EventQueue;
 import java.awt.Font;
-import javax.swing.JLabel;
-import javax.swing.SwingConstants;
-import java.awt.event.ActionListener;
-import java.text.DecimalFormat;
+import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.Statement;
+import java.sql.Timestamp;
+import java.text.DecimalFormat;
+
+import javax.swing.*;
+
 
 
 public class MainFrame {
-
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			// Runs the program displaying the MainFrame content
+			public void run() {
+				try {
+					MainFrame window = new MainFrame(); //calls the method that prompts the frame with all its contents to initialize
+					window.frmLittleRestaurant.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+	
+	// Frame and text variables
 	private JFrame frmLittleRestaurant;
 	private JTextField txtB;
 	private JTextField txtMS;
@@ -50,25 +67,8 @@ public class MainFrame {
 	private JTextField txtTax;
 	private JTextField txtTotal;
 	private JTextField txtBeer;
-
 	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					MainFrame window = new MainFrame(); //calls the method that prompts the frame with all its contents to initialize
-					window.frmLittleRestaurant.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the application.
+	 * Creates the application.
 	 */
 	public MainFrame() { //contains the method that initializes all contents in the frame
 		initialize();
@@ -1250,11 +1250,23 @@ DecimalFormat df = new DecimalFormat("####0.00");
 		panel.setLayout(null);
 		
 		JButton btnSales = new JButton("See Sales Database");
+		btnSales.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				sales saleFrame = new sales();
+				saleFrame.setVisible(true);
+			}
+		});
 		btnSales.setBounds(10, 261, 286, 47);
 		panel.add(btnSales);
 		btnSales.setFont(new Font("Tahoma", Font.BOLD, 16));
 		
 		JButton btnPricing = new JButton("See Menu Pricing Database");
+		btnPricing.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				pricing priceFrame = new pricing();
+				priceFrame.setVisible(true);
+			}
+		});
 		btnPricing.setBounds(10, 69, 286, 47);
 		panel.add(btnPricing);
 		btnPricing.setFont(new Font("Tahoma", Font.BOLD, 16));
@@ -1303,6 +1315,58 @@ DecimalFormat df = new DecimalFormat("####0.00");
 		btnReset.setFont(new Font("Tahoma", Font.BOLD, 16));
 		
 		JButton btnFinishOrder = new JButton("Finish Order");
+		btnFinishOrder.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				double total = Double.parseDouble(txtTotal.getText());
+				double tax = Double.parseDouble(txtTax.getText());
+				Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+				try {     
+					Class.forName("com.mysql.jdbc.Driver");    
+					Connection con = DriverManager.getConnection("jdbc:mysql://107.180.40.144:3306/jamie_trent", "trentuproject", "Passw0rd");    
+					Statement statement = con.createStatement();     
+					statement.executeUpdate("INSERT INTO Sales VALUES ( Default, '"+ timestamp +"' , '"+ total +"' , '"+ tax +"')"); 
+					JOptionPane.showMessageDialog(null, "Sale of $" + total + " successfully recorded into the database");
+			    }
+				catch(Exception x)        
+			    {      
+			       System.out.println(x);      
+			    }    
+				txtB.setText("0");
+				txtMS.setText("0");
+				txtGB.setText("0");
+				txtP.setText("0");
+				txtLN.setText("0");
+				txtFF.setText("0");
+				txtMV.setText("0");
+				txtR.setText("0");
+				txtCS.setText("0");
+				txtBP.setText("0");
+				txtS.setText("0");
+				txtJ.setText("0");
+				txtBeer.setText("0");
+				txtM.setText("0");
+				txtW.setText("0");
+				txtSp.setText("0");
+				txtCB.setText("0");
+				txtChB.setText("0");
+				txtVS.setText("0");
+				txtCh.setText("0");
+				txtBC.setText("0");
+				txtSu.setText("0");
+				txtBR.setText("0");
+				txtSt.setText("0");
+				txtSa.setText("0");
+				txtPi.setText("0");
+				txtIC.setText("0");
+				txtC.setText("0");
+				txtCa.setText("0");
+				txtPu.setText("0");
+				txtSubtotal.setText("0");
+				txtTax.setText("0");
+				txtTotal.setText("0");
+				
+			}
+		});
 		btnFinishOrder.setBounds(10, 129, 286, 121);
 		panel.add(btnFinishOrder);
 		btnFinishOrder.setFont(new Font("Tahoma", Font.BOLD, 16));
