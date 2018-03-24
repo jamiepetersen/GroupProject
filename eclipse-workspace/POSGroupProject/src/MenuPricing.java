@@ -1,14 +1,6 @@
 import java.awt.EventQueue;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
-import net.proteanit.sql.DbUtils;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import java.awt.Font;
-import javax.swing.JButton;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -16,9 +8,17 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.awt.event.ActionEvent;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTable;
+import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
 
-public class pricing extends JFrame {
+import net.proteanit.sql.DbUtils;
+
+public class MenuPricing extends JFrame {
 
 	/**
 	 * 
@@ -30,7 +30,6 @@ public class pricing extends JFrame {
 	static Statement stmt = null;	
 	static PreparedStatement pstmt;
 	static ResultSet rs;
-
 	/**
 	 * Launch the application.
 	 */
@@ -38,7 +37,7 @@ public class pricing extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					pricing frame = new pricing();
+					MenuPricing frame = new MenuPricing();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -46,47 +45,37 @@ public class pricing extends JFrame {
 			}
 		});
 	}
-	
-	public static void connect () throws Exception {
-		if (conn != null) return;
-		try {
-			Class.forName("com.mysql.jdbc.Driver");
-		}
-		catch (ClassNotFoundException e) {
-			throw new Exception ("Database not reachable");
+		public static void connect () throws Exception {
+			if (conn != null) return;
+			try {
+				Class.forName("com.mysql.jdbc.Driver"); //loads mysql driver
+			}
+			catch (ClassNotFoundException e) {			//if it cannot load, produce error
+				throw new Exception ("Database not reachable");
+			}
+			
+			//connects to database
+			conn = DriverManager.getConnection("jdbc:mysql://107.180.40.144:3306/jamie_trent", "trentuproject", "Passw0rd");
+			stmt = conn.createStatement();
 		}
 		
-		conn = DriverManager.getConnection("jdbc:mysql://107.180.40.144:3306/jamie_trent", "trentuproject", "Passw0rd");
-		JOptionPane.showMessageDialog(null, "Connection To Database Successful");
-		stmt = conn.createStatement();
-	}
-	
-	public static void getMenu() {
-		try {
-			String query = " SELECT * FROM Menu";
-			rs = stmt.executeQuery(query);
-			table.setModel(DbUtils.resultSetToTableModel(rs));
-		}catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-	
-	public static void disconnect() {
-		if (conn != null) {
+		public static void getMenu() {
 			try {
-				conn.close();
-			}
-			catch (SQLException e){
-				System.out.println("Connection unable to close");
+				String query = " SELECT * FROM Menu";
+				rs = stmt.executeQuery(query);		//holds statement that executes above string query
+				table.setModel(DbUtils.resultSetToTableModel(rs)); //places results in table
+			}catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 		}
-	}
+		
+	
 
 	/**
 	 * Create the frame.
 	 */
-	public pricing() {
+	public MenuPricing() {
 		setTitle("Little Restaurant Pricing Table ");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 459, 561);
@@ -96,18 +85,18 @@ public class pricing extends JFrame {
 		contentPane.setLayout(null);
 		
 		JButton btnEnter = new JButton("Enter Pricing Database");
-		btnEnter.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
+		btnEnter.addActionListener(new ActionListener() {		//waits for click
+			public void actionPerformed(ActionEvent arg0) {		//once clicked it shows the table
 				table.setEnabled(true);
 				table.setShowGrid(true);
 				try {
-					connect();
-					getMenu();
+					connect(); //connects to the database
+					getMenu(); //shows table filled from database result query
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				btnEnter.setVisible(false);
+				btnEnter.setVisible(false); //make the button disappear
 			}
 		});
 		btnEnter.setFont(new Font("Tahoma", Font.BOLD, 16));

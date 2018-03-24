@@ -1,19 +1,23 @@
 import java.awt.EventQueue;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
-import net.proteanit.sql.DbUtils;
-import java.sql.*;
 import java.awt.Font;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTable;
+import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
 
-public class sales extends JFrame {
+import net.proteanit.sql.DbUtils;
+
+public class SalesDatabase extends JFrame {
 
 	/**
 	 * 
@@ -31,7 +35,7 @@ public class sales extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					sales frame = new sales();
+					SalesDatabase frame = new SalesDatabase();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -43,14 +47,13 @@ public class sales extends JFrame {
 	public static void connect () throws Exception {
 		if (conn != null) return;
 		try {
-			Class.forName("com.mysql.jdbc.Driver");
+			Class.forName("com.mysql.jdbc.Driver"); //loads the MySQL driver
 		}
 		catch (ClassNotFoundException e) {
-			throw new Exception ("Database not reachable");
+			throw new Exception ("Database not reachable"); //if cant load, show error
 		}
-		
+		//connects to the following database
 		conn = DriverManager.getConnection("jdbc:mysql://107.180.40.144:3306/jamie_trent", "trentuproject", "Passw0rd");
-		JOptionPane.showMessageDialog(null, "Connection To Database Successful");
 		stmt = conn.createStatement();
 		
 	}
@@ -58,8 +61,8 @@ public class sales extends JFrame {
 	public static void getSales() {
 		try {
 			String query = " SELECT * FROM Sales";
-			ResultSet rs = stmt.executeQuery(query);
-			table.setModel(DbUtils.resultSetToTableModel(rs));
+			ResultSet rs = stmt.executeQuery(query); //variable for the result of the statement running the query on the database
+			table.setModel(DbUtils.resultSetToTableModel(rs)); //fills the table with all results returned from the database
 		}catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -69,7 +72,7 @@ public class sales extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public sales() {
+	public SalesDatabase() {
 		setTitle("Little Restaurant Sales Database");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 670, 480);
@@ -80,18 +83,18 @@ public class sales extends JFrame {
 		
 		JButton btnEnterS = new JButton("Enter Sales Database");
 		btnEnterS.setFont(new Font("Tahoma", Font.BOLD, 16));
-		btnEnterS.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+		btnEnterS.addActionListener(new ActionListener() {		//waits for click
+			public void actionPerformed(ActionEvent e) {		//once clicked it shows the table
 				table.setEnabled(true);
 				table.setShowGrid(true);
 				try {
-					connect();
-					getSales();
+					connect(); //connects to the database
+					getSales();//sows the table filled with results 
 				} catch (Exception f) {
 					// TODO Auto-generated catch block
 					f.printStackTrace();
 				}
-				btnEnterS.setVisible(false);
+				btnEnterS.setVisible(false); //makes the button disappear
 			}
 		});
 		btnEnterS.setBounds(176, 202, 286, 45);
@@ -159,3 +162,4 @@ public class sales extends JFrame {
 	}
 
 }
+
