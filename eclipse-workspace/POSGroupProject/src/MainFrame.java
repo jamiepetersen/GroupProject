@@ -34,39 +34,77 @@ public class MainFrame {
 	
 	// Frame and text variables
 	private JFrame frmLittleRestaurant;
-	private JTextField txtB;
-	private JTextField txtMS;
-	private JTextField txtGB;
-	private JTextField txtP;
-	private JTextField txtLN;
-	private JTextField txtFF;
-	private JTextField txtMV;
-	private JTextField txtR;
-	private JTextField txtCS;
-	private JTextField txtBP;
-	private JTextField txtS;
-	private JTextField txtJ;
-	private JTextField txtM;
-	private JTextField txtW;
-	private JTextField txtPi;
-	private JTextField txtIC;
-	private JTextField txtC;
-	private JTextField txtCa;
-	private JTextField txtPu;
-	private JTextField txtSp;
-	private JTextField txtCB;
-	private JTextField txtChB;
-	private JTextField txtVS;
-	private JTextField txtCh;
-	private JTextField txtBC;
-	private JTextField txtSu;
-	private JTextField txtBR;
-	private JTextField txtSt;
-	private JTextField txtSa;
-	private JTextField txtSubtotal;
-	private JTextField txtTax;
-	private JTextField txtTotal;
-	private JTextField txtBeer;
+	static JTextField txtB;
+	static JTextField txtMS;
+	static JTextField txtGB;
+	static JTextField txtP;
+	static JTextField txtLN;
+	static JTextField txtFF;
+	static JTextField txtMV;
+	static JTextField txtR;
+	static JTextField txtCS;
+	static JTextField txtBP;
+	static JTextField txtS;
+	static JTextField txtJ;
+	static JTextField txtM;
+	static JTextField txtW;
+	static JTextField txtPi;
+	static JTextField txtIC;
+	static JTextField txtC;
+	static JTextField txtCa;
+	static JTextField txtPu;
+	static JTextField txtSp;
+	static JTextField txtCB;
+	static JTextField txtChB;
+	static JTextField txtVS;
+	static JTextField txtCh;
+	static JTextField txtBC;
+	static JTextField txtSu;
+	static JTextField txtBR;
+	static JTextField txtSt;
+	static JTextField txtSa;
+	static JTextField txtSubtotal;
+	static JTextField txtTax;
+	static JTextField txtTotal;
+	static JTextField txtBeer;
+	static DecimalFormat df = new DecimalFormat("####0.00"); 	//ensures only 2 decimal places in result (used for the totals and tax)
+	
+	public static void clear() {
+		txtB.setText("0");
+		txtMS.setText("0");
+		txtGB.setText("0");
+		txtP.setText("0");
+		txtLN.setText("0");
+		txtFF.setText("0");
+		txtMV.setText("0");
+		txtR.setText("0");
+		txtCS.setText("0");
+		txtBP.setText("0");
+		txtS.setText("0");
+		txtJ.setText("0");
+		txtBeer.setText("0");
+		txtM.setText("0");
+		txtW.setText("0");
+		txtSp.setText("0");
+		txtCB.setText("0");
+		txtChB.setText("0");
+		txtVS.setText("0");
+		txtCh.setText("0");
+		txtBC.setText("0");
+		txtSu.setText("0");
+		txtBR.setText("0");
+		txtSt.setText("0");
+		txtSa.setText("0");
+		txtPi.setText("0");
+		txtIC.setText("0");
+		txtC.setText("0");
+		txtCa.setText("0");
+		txtPu.setText("0");
+		txtSubtotal.setText("0");
+		txtTax.setText("0");
+		txtTotal.setText("0");
+		
+	}
 	/**
 	 * Creates the application.
 	 */
@@ -100,21 +138,11 @@ public class MainFrame {
 		JButton btnB = new JButton("Bruschetta");
 		btnB.addActionListener(new ActionListener() { 				//Waits for user to click on button
 			public void actionPerformed(ActionEvent e) {			//When the button is clicked, the following actions take place:
-				DecimalFormat df = new DecimalFormat("####0.00"); 	//ensures only 2 decimal places in result (used for the totals and tax)
 				
 				double amount = Double.parseDouble(txtB.getText()); //checks for number in Bruschetta amount text box
 				double amnt = amount +1; 							//adds one to current amount
 				txtB.setText(" " + amnt); 							//displays new amount in amount text box
-				
-				double subtotal = Double.parseDouble(txtSubtotal.getText()); 	//checks for number in subtotal
-				double price = subtotal + 4.00; 								//adds current price to subtotal
-				txtSubtotal.setText("" + df.format(price)); 					//displays new subtotal
-				
-				double tax = price * 0.13; 							//takes new subtotal and calculates tax
-				txtTax.setText("" + df.format(tax)); 				//displays new tax amount
-				
-				double total = price + tax; 						//sums new tax and subtotal amount
-				txtTotal.setText("" + df.format(total)); 			//displays new total
+				calculate4();										
 			}
 		});
 		btnB.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -146,7 +174,6 @@ public class MainFrame {
 		JButton btnMS = new JButton("Mozzarela Sticks");
 		btnMS.addActionListener(new ActionListener() {						//Waits for user to click on button
 			public void actionPerformed(ActionEvent e) {					//Once clicked, the following actions take place:
-				DecimalFormat df = new DecimalFormat("####0.00");
 				
 				double amount = Double.parseDouble(txtMS.getText()); 		//checks amount in textbox, adds 1, outputs new amount
 				double amnt = amount +1;
@@ -180,7 +207,6 @@ public class MainFrame {
 		JButton btnGB = new JButton("Garlic Bread");
 		btnGB.addActionListener(new ActionListener() {						//Waits for user to click on button
 			public void actionPerformed(ActionEvent e) {					//Once clicked, the following actions take place:
-				DecimalFormat df = new DecimalFormat("####0.00");
 				
 				double amount = Double.parseDouble(txtGB.getText()); 		//checks amount in textbox, adds 1, outputs new amount
 				double amnt = amount +1;
@@ -214,21 +240,11 @@ public class MainFrame {
 		JButton btnP = new JButton("Perogies");
 		btnP.addActionListener(new ActionListener() {						//Waits for user to click on button
 			public void actionPerformed(ActionEvent e) {					//Once clicked, the following actions take place:
-				DecimalFormat df = new DecimalFormat("####0.00");
 				
 				double amount = Double.parseDouble(txtP.getText()); 		//checks amount in textbox, adds 1, outputs new amount
 				double amnt = amount +1;
 				txtP.setText(" " + amnt); 
-				
-				double subtotal = Double.parseDouble(txtSubtotal.getText());//checks amount in subtotal, adds item cost, outputs new subtotal 
-				double price = subtotal + 5.00; 
-				txtSubtotal.setText("" + df.format(price)); 
-				
-				double tax = price * 0.13; 									//calculates tax on new subtotal, displays new tax amount
-				txtTax.setText("" + df.format(tax)); 				
-				
-				double total = price + tax;									//sums subtotal and tax, displays sum in total box
-				txtTotal.setText("" + df.format(total)); 
+				calculate5();
 			}
 		});
 		btnP.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -238,7 +254,6 @@ public class MainFrame {
 		JButton btnLN = new JButton("Loaded Nachos");
 		btnLN.addActionListener(new ActionListener() {						//Waits for user to click on button
 			public void actionPerformed(ActionEvent e) {					//Once clicked, the following actions take place:
-				DecimalFormat df = new DecimalFormat("####0.00");
 				
 				double amount = Double.parseDouble(txtLN.getText()); 		//checks amount in textbox, adds 1, outputs new amount
 				double amnt = amount +1;	
@@ -294,21 +309,11 @@ public class MainFrame {
 		JButton btnFF = new JButton("French Fries");
 		btnFF.addActionListener(new ActionListener() {						//Waits for user to click on button
 			public void actionPerformed(ActionEvent e) {					//Once clicked, the following actions take place:
-				DecimalFormat df = new DecimalFormat("####0.00");
 				
 				double amount = Double.parseDouble(txtFF.getText()); 		//checks amount in textbox, adds 1, outputs new amount
 				double amnt = amount +1;
 				txtFF.setText(" " + amnt); 
-				
-				double subtotal = Double.parseDouble(txtSubtotal.getText());//checks amount in subtotal, adds item cost, outputs new subtotal 
-				double price = subtotal + 2.00; 
-				txtSubtotal.setText("" + df.format(price)); 
-				
-				double tax = price * 0.13; 									//calculates tax on new subtotal, displays new tax amount
-				txtTax.setText("" + df.format(tax)); 
-				
-				double total = price + tax;									//sums subtotal and tax, displays sum in total box
-				txtTotal.setText("" + df.format(total)); 
+				calculate2();
 			}
 		});
 		btnFF.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -340,21 +345,11 @@ public class MainFrame {
 		JButton btnMV = new JButton("Mixed Veggies");
 		btnMV.addActionListener(new ActionListener() {						//Waits for user to click on button
 			public void actionPerformed(ActionEvent e) {					//Once clicked, the following actions take place:
-				DecimalFormat df = new DecimalFormat("####0.00");
 				
 				double amount = Double.parseDouble(txtMV.getText()); 		//checks amount in textbox, adds 1, outputs new amount
 				double amnt = amount +1;
 				txtMV.setText(" " + amnt); 
-				
-				double subtotal = Double.parseDouble(txtSubtotal.getText());//checks amount in subtotal, adds item cost, outputs new subtotal 
-				double price = subtotal + 2.00; 
-				txtSubtotal.setText("" + df.format(price)); 
-				
-				double tax = price * 0.13; 									//calculates tax on new subtotal, displays new tax amount
-				txtTax.setText("" + df.format(tax)); 
-				
-				double total = price + tax;									//sums subtotal and tax, displays sum in total box
-				txtTotal.setText("" + df.format(total)); 
+				calculate2(); 
 			}
 		});
 		btnMV.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -374,21 +369,11 @@ public class MainFrame {
 		JButton btnR = new JButton("Rice");
 		btnR.addActionListener(new ActionListener() {						//Waits for user to click on button
 			public void actionPerformed(ActionEvent e) {					//Once clicked, the following actions take place:
-				DecimalFormat df = new DecimalFormat("####0.00");
 				
 				double amount = Double.parseDouble(txtR.getText()); 		//checks amount in textbox, adds 1, outputs new amount
 				double amnt = amount +1;
 				txtR.setText(" " + amnt); 
-				
-				double subtotal = Double.parseDouble(txtSubtotal.getText());//checks amount in subtotal, adds item cost, outputs new subtotal 
-				double price = subtotal + 2.00; 
-				txtSubtotal.setText("" + df.format(price)); 
-				
-				double tax = price * 0.13; 									//calculates tax on new subtotal, displays new tax amount
-				txtTax.setText("" + df.format(tax)); 
-				
-				double total = price + tax;									//sums subtotal and tax, displays sum in total box
-				txtTotal.setText("" + df.format(total)); 
+				calculate2();
 			}
 		});
 		btnR.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -408,21 +393,11 @@ public class MainFrame {
 		JButton btnCS = new JButton("Ceasar Salad");
 		btnCS.addActionListener(new ActionListener() {						//Waits for user to click on button
 			public void actionPerformed(ActionEvent e) {					//Once clicked, the following actions take place:
-				DecimalFormat df = new DecimalFormat("####0.00");
 				
 				double amount = Double.parseDouble(txtCS.getText()); 		//checks amount in textbox, adds 1, outputs new amount
 				double amnt = amount +1;
 				txtCS.setText(" " + amnt); 
-				
-				double subtotal = Double.parseDouble(txtSubtotal.getText());//checks amount in subtotal, adds item cost, outputs new subtotal 
-				double price = subtotal + 2.00; 
-				txtSubtotal.setText("" + df.format(price)); 
-				
-				double tax = price * 0.13; 									//calculates tax on new subtotal, displays new tax amount
-				txtTax.setText("" + df.format(tax)); 
-				
-				double total = price + tax;									//sums subtotal and tax, displays sum in total box
-				txtTotal.setText("" + df.format(total)); 
+				calculate2();
 			}
 		});
 		btnCS.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -432,21 +407,11 @@ public class MainFrame {
 		JButton btnBP = new JButton("Baked Potatoe");
 		btnBP.addActionListener(new ActionListener() {						//Waits for user to click on button
 			public void actionPerformed(ActionEvent e) {					//Once clicked, the following actions take place:
-				DecimalFormat df = new DecimalFormat("####0.00");
 				
 				double amount = Double.parseDouble(txtBP.getText()); 		//checks amount in textbox, adds 1, outputs new amount
 				double amnt = amount +1;
 				txtBP.setText(" " + amnt); 
-				
-				double subtotal = Double.parseDouble(txtSubtotal.getText());//checks amount in subtotal, adds item cost, outputs new subtotal 
-				double price = subtotal + 3.00; 
-				txtSubtotal.setText("" + df.format(price)); 
-				
-				double tax = price * 0.13; 									//calculates tax on new subtotal, displays new tax amount
-				txtTax.setText("" + df.format(tax)); 
-				
-				double total = price + tax;									//sums subtotal and tax, displays sum in total box
-				txtTotal.setText("" + df.format(total)); 
+				calculate3();
 			}
 		});
 		btnBP.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -482,21 +447,11 @@ public class MainFrame {
 		JButton btnS = new JButton("Soda");
 		btnS.addActionListener(new ActionListener() {						//Waits for user to click on button
 			public void actionPerformed(ActionEvent e) {					//Once clicked, the following actions take place:
-				DecimalFormat df = new DecimalFormat("####0.00");
 				
 				double amount = Double.parseDouble(txtS.getText()); 		//checks amount in textbox, adds 1, outputs new amount
 				double amnt = amount +1;
 				txtS.setText(" " + amnt); 
-				
-				double subtotal = Double.parseDouble(txtSubtotal.getText());//checks amount in subtotal, adds item cost, outputs new subtotal 
-				double price = subtotal + 2.00; 
-				txtSubtotal.setText("" + df.format(price)); 
-				
-				double tax = price * 0.13; 									//calculates tax on new subtotal, displays new tax amount
-				txtTax.setText("" + df.format(tax)); 
-				
-				double total = price + tax;									//sums subtotal and tax, displays sum in total box
-				txtTotal.setText("" + df.format(total)); 
+				calculate2();
 			}
 		});
 		btnS.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -528,21 +483,11 @@ public class MainFrame {
 		JButton btnJ = new JButton("Juice");
 		btnJ.addActionListener(new ActionListener() {						//Waits for user to click on button
 			public void actionPerformed(ActionEvent e) {					//Once clicked, the following actions take place:
-				DecimalFormat df = new DecimalFormat("####0.00");
 				
 				double amount = Double.parseDouble(txtJ.getText()); 		//checks amount in textbox, adds 1, outputs new amount
 				double amnt = amount +1;
 				txtJ.setText(" " + amnt); 
-				
-				double subtotal = Double.parseDouble(txtSubtotal.getText());//checks amount in subtotal, adds item cost, outputs new subtotal 
-				double price = subtotal + 1.50; 
-				txtSubtotal.setText("" + df.format(price)); 
-				
-				double tax = price * 0.13; 									//calculates tax on new subtotal, displays new tax amount
-				txtTax.setText("" + df.format(tax)); 
-				
-				double total = price + tax;									//sums subtotal and tax, displays sum in total box
-				txtTotal.setText("" + df.format(total)); 
+				calculate15();
 			}
 		});
 		btnJ.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -562,7 +507,6 @@ public class MainFrame {
 		JButton btnBeer = new JButton("Beer");
 		btnBeer.addActionListener(new ActionListener() {					//Waits for user to click on button
 			public void actionPerformed(ActionEvent e) {					//Once clicked, the following actions take place:
-				DecimalFormat df = new DecimalFormat("####0.00");
 				
 				double amount = Double.parseDouble(txtBeer.getText()); 		//checks amount in textbox, adds 1, outputs new amount
 				double amnt = amount +1;
@@ -610,21 +554,11 @@ public class MainFrame {
 		JButton btnW = new JButton("Wine");
 		btnW.addActionListener(new ActionListener() {						//Waits for user to click on button
 			public void actionPerformed(ActionEvent e) {					//Once clicked, the following actions take place:
-				DecimalFormat df = new DecimalFormat("####0.00");
 				
 				double amount = Double.parseDouble(txtW.getText()); 		//checks amount in textbox, adds 1, outputs new amount
 				double amnt = amount +1;
 				txtW.setText(" " + amnt); 
-				
-				double subtotal = Double.parseDouble(txtSubtotal.getText()); //checks amount in subtotal, adds item cost, outputs new subtotal
-				double price = subtotal + 5.00; 
-				txtSubtotal.setText("" + df.format(price)); 
-				
-				double tax = price * 0.13; 									//calculates tax on new subtotal, displays new tax amount
-				txtTax.setText("" + df.format(tax)); 
-				
-				double total = price + tax;									//sums subtotal and tax, displays sum in total box
-				txtTotal.setText("" + df.format(total)); 
+				calculate5();
 			}
 		});
 		btnW.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -694,21 +628,11 @@ public class MainFrame {
 		JButton btnPi = new JButton("Pie");
 		btnPi.addActionListener(new ActionListener() {						//Waits for user to click on button
 			public void actionPerformed(ActionEvent e) {					//Once clicked, the following actions take place:
-				DecimalFormat df = new DecimalFormat("####0.00");
 				
 				double amount = Double.parseDouble(txtPi.getText()); 		//checks amount in textbox, adds 1, outputs new amount
 				double amnt = amount +1;
 				txtPi.setText(" " + amnt); 
-				
-				double subtotal = Double.parseDouble(txtSubtotal.getText());//checks amount in subtotal, adds item cost, outputs new subtotal
-				double price = subtotal + 4.00; 
-				txtSubtotal.setText("" + df.format(price)); 
-				
-				double tax = price * 0.13; 									//calculates tax on new subtotal, displays new tax amount
-				txtTax.setText("" + df.format(tax)); 
-				
-				double total = price + tax;									//sums subtotal and tax, displays sum in total box
-				txtTotal.setText("" + df.format(total)); 
+				calculate4();
 			}
 		});
 		btnPi.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -740,21 +664,11 @@ public class MainFrame {
 		JButton btnIC = new JButton("Ice Cream");
 		btnIC.addActionListener(new ActionListener() {						//Waits for user to click on button
 			public void actionPerformed(ActionEvent e) {					//Once clicked, the following actions take place:
-				DecimalFormat df = new DecimalFormat("####0.00");
 				
 				double amount = Double.parseDouble(txtIC.getText()); 		//checks amount in textbox, adds 1, outputs new amount
 				double amnt = amount +1;
 				txtIC.setText(" " + amnt); 
-				
-				double subtotal = Double.parseDouble(txtSubtotal.getText());//checks amount in subtotal, adds item cost, outputs new subtotal 
-				double price = subtotal + 3.00; 
-				txtSubtotal.setText("" + df.format(price)); 
-				
-				double tax = price * 0.13; 									//calculates tax on new subtotal, displays new tax amount
-				txtTax.setText("" + df.format(tax)); 
-				
-				double total = price + tax;									//sums subtotal and tax, displays sum in total box
-				txtTotal.setText("" + df.format(total)); 
+				calculate3();
 			}
 		});
 		btnIC.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -774,21 +688,11 @@ public class MainFrame {
 		JButton btnC = new JButton("Cookies");
 		btnC.addActionListener(new ActionListener() {						//Waits for user to click on button
 			public void actionPerformed(ActionEvent e) {					//Once clicked, the following actions take place:
-				DecimalFormat df = new DecimalFormat("####0.00");
 				
 				double amount = Double.parseDouble(txtC.getText()); 		//checks amount in textbox, adds 1, outputs new amount
 				double amnt = amount +1;
 				txtC.setText(" " + amnt); 
-				
-				double subtotal = Double.parseDouble(txtSubtotal.getText());//checks amount in subtotal, adds item cost, outputs new subtotal 
-				double price = subtotal + 2.00; 
-				txtSubtotal.setText("" + df.format(price)); 
-				
-				double tax = price * 0.13; 									//calculates tax on new subtotal, displays new tax amount
-				txtTax.setText("" + df.format(tax)); 
-				
-				double total = price + tax;									//sums subtotal and tax, displays sum in total box
-				txtTotal.setText("" + df.format(total)); 
+				calculate2();
 			}
 		});
 		btnC.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -808,21 +712,11 @@ public class MainFrame {
 		JButton btnCa = new JButton("Cake");
 		btnCa.addActionListener(new ActionListener() {						//Waits for user to click on button
 			public void actionPerformed(ActionEvent e) {					//Once clicked, the following actions take place:
-				DecimalFormat df = new DecimalFormat("####0.00");
 				
 				double amount = Double.parseDouble(txtCa.getText()); 		//checks amount in textbox, adds 1, outputs new amount
 				double amnt = amount +1;
 				txtCa.setText(" " + amnt); 
-				
-				double subtotal = Double.parseDouble(txtSubtotal.getText());//checks amount in subtotal, adds item cost, outputs new subtotal 
-				double price = subtotal + 4.00; 
-				txtSubtotal.setText("" + df.format(price)); 
-				
-				double tax = price * 0.13; 									//calculates tax on new subtotal, displays new tax amount
-				txtTax.setText("" + df.format(tax)); 
-				
-				double total = price + tax;									//sums subtotal and tax, displays sum in total box
-				txtTotal.setText("" + df.format(total)); 
+				calculate4();
 			}
 		});
 		btnCa.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -832,21 +726,11 @@ public class MainFrame {
 		JButton btnPu = new JButton("Pudding");
 		btnPu.addActionListener(new ActionListener() {						//Waits for user to click on button
 			public void actionPerformed(ActionEvent e) {					//Once clicked, the following actions take place:	
-				DecimalFormat df = new DecimalFormat("####0.00");
 				
 				double amount = Double.parseDouble(txtPu.getText()); 		//checks amount in textbox, adds 1, outputs new amount
 				double amnt = amount +1;
 				txtPu.setText(" " + amnt); 
-				
-				double subtotal = Double.parseDouble(txtSubtotal.getText());//checks amount in subtotal, adds item cost, outputs new subtotal 
-				double price = subtotal + 3.00; 
-				txtSubtotal.setText("" + df.format(price)); 
-				
-				double tax = price * 0.13; 									//calculates tax on new subtotal, displays new tax amount
-				txtTax.setText("" + df.format(tax)); 
-				
-				double total = price + tax;									//sums subtotal and tax, displays sum in total box
-				txtTotal.setText("" + df.format(total)); 
+				calculate3(); 
 			}
 		});
 		btnPu.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -882,7 +766,6 @@ public class MainFrame {
 		JButton btnSp = new JButton("Spaghetti");
 		btnSp.addActionListener(new ActionListener() {						//Waits for user to click on button
 			public void actionPerformed(ActionEvent e) {					//Once clicked, the following actions take place:
-				DecimalFormat df = new DecimalFormat("####0.00");
 				
 				double amount = Double.parseDouble(txtSp.getText()); 		//checks amount in textbox, adds 1, outputs new amount
 				double amnt = amount +1;
@@ -928,7 +811,6 @@ public class MainFrame {
 		JButton btnCB = new JButton("Cheeseburger");
 		btnCB.addActionListener(new ActionListener() {						//Waits for user to click on button
 			public void actionPerformed(ActionEvent e) {					//Once clicked, the following actions take place:
-				DecimalFormat df = new DecimalFormat("####0.00");
 				
 				double amount = Double.parseDouble(txtCB.getText()); 		//checks amount in textbox, adds 1, outputs new amount
 				double amnt = amount +1;
@@ -962,7 +844,6 @@ public class MainFrame {
 		JButton btnChB = new JButton("Chicken Burger");
 		btnChB.addActionListener(new ActionListener() {						//Waits for user to click on button
 			public void actionPerformed(ActionEvent e) {					//Once clicked, the following actions take place:
-				DecimalFormat df = new DecimalFormat("####0.00");
 				
 				double amount = Double.parseDouble(txtChB.getText()); 		//checks amount in textbox, adds 1, outputs new amount
 				double amnt = amount +1;
@@ -996,7 +877,6 @@ public class MainFrame {
 		JButton btnVS = new JButton("Vegetable Soup");
 		btnVS.addActionListener(new ActionListener() {						//Waits for user to click on button
 			public void actionPerformed(ActionEvent e) {					//Once clicked, the following actions take place:
-				DecimalFormat df = new DecimalFormat("####0.00");
 				
 				double amount = Double.parseDouble(txtVS.getText()); 		//checks amount in textbox, adds 1, outputs new amount
 				double amnt = amount +1;
@@ -1020,7 +900,6 @@ public class MainFrame {
 		JButton btnCh = new JButton("Chilli");
 		btnCh.addActionListener(new ActionListener() {						//Waits for user to click on button
 			public void actionPerformed(ActionEvent e) {					//Once clicked, the following actions take place:
-				DecimalFormat df = new DecimalFormat("####0.00");
 				
 				double amount = Double.parseDouble(txtCh.getText()); 		//checks amount in textbox, adds 1, outputs new amount
 				double amnt = amount +1;
@@ -1064,7 +943,6 @@ public class MainFrame {
 		JButton btnBC = new JButton("Butter Chicken");
 		btnBC.addActionListener(new ActionListener() {						//Waits for user to click on button
 			public void actionPerformed(ActionEvent e) {					//Once clicked, the following actions take place:
-DecimalFormat df = new DecimalFormat("####0.00");
 				
 				double amount = Double.parseDouble(txtBC.getText()); 		//checks amount in textbox, adds 1, outputs new amount
 				double amnt = amount +1;
@@ -1088,7 +966,6 @@ DecimalFormat df = new DecimalFormat("####0.00");
 		JButton btnSu = new JButton("Sushi");
 		btnSu.addActionListener(new ActionListener() {						//Waits for user to click on button
 			public void actionPerformed(ActionEvent e) {					//Once clicked, the following actions take place:
-				DecimalFormat df = new DecimalFormat("####0.00");
 				
 				double amount = Double.parseDouble(txtSu.getText()); 		//checks amount in textbox, adds 1, outputs new amount
 				double amnt = amount +1;
@@ -1112,7 +989,6 @@ DecimalFormat df = new DecimalFormat("####0.00");
 		JButton btnBR = new JButton("BBQ Ribs");
 		btnBR.addActionListener(new ActionListener() {						//Waits for user to click on button
 			public void actionPerformed(ActionEvent e) {					//Once clicked, the following actions take place:
-				DecimalFormat df = new DecimalFormat("####0.00");
 				
 				double amount = Double.parseDouble(txtBR.getText()); 		//checks amount in textbox, adds 1, outputs new amount
 				double amnt = amount +1;
@@ -1136,7 +1012,6 @@ DecimalFormat df = new DecimalFormat("####0.00");
 		JButton btnSt = new JButton("Steak");
 		btnSt.addActionListener(new ActionListener() {						//Waits for user to click on button
 			public void actionPerformed(ActionEvent arg0) {					//Once clicked, the following actions take place:
-				DecimalFormat df = new DecimalFormat("####0.00");
 				
 				double amount = Double.parseDouble(txtSt.getText()); 		//checks amount in textbox, adds 1, outputs new amount		
 				double amnt = amount +1;
@@ -1160,7 +1035,6 @@ DecimalFormat df = new DecimalFormat("####0.00");
 		JButton btnSa = new JButton("Salmon");
 		btnSa.addActionListener(new ActionListener() {						//Waits for user to click on button
 			public void actionPerformed(ActionEvent e) {					//Once clicked, the following actions take place:
-				DecimalFormat df = new DecimalFormat("####0.00");
 				
 				double amount = Double.parseDouble(txtSa.getText()); 		//checks amount in textbox, adds 1, outputs new amount
 				double amnt = amount +1;
@@ -1275,39 +1149,7 @@ DecimalFormat df = new DecimalFormat("####0.00");
 		btnReset.addActionListener(new ActionListener() {		//Waits for user to click on button
 			public void actionPerformed(ActionEvent e) {
 				// makes all the following textboxes 0
-				txtB.setText("0");
-				txtMS.setText("0");
-				txtGB.setText("0");
-				txtP.setText("0");
-				txtLN.setText("0");
-				txtFF.setText("0");
-				txtMV.setText("0");
-				txtR.setText("0");
-				txtCS.setText("0");
-				txtBP.setText("0");
-				txtS.setText("0");
-				txtJ.setText("0");
-				txtBeer.setText("0");
-				txtM.setText("0");
-				txtW.setText("0");
-				txtSp.setText("0");
-				txtCB.setText("0");
-				txtChB.setText("0");
-				txtVS.setText("0");
-				txtCh.setText("0");
-				txtBC.setText("0");
-				txtSu.setText("0");
-				txtBR.setText("0");
-				txtSt.setText("0");
-				txtSa.setText("0");
-				txtPi.setText("0");
-				txtIC.setText("0");
-				txtC.setText("0");
-				txtCa.setText("0");
-				txtPu.setText("0");
-				txtSubtotal.setText("0");
-				txtTax.setText("0");
-				txtTotal.setText("0");
+				clear();
 				
 			}
 		});
@@ -1338,39 +1180,7 @@ DecimalFormat df = new DecimalFormat("####0.00");
 			       System.out.println(x);      
 			    }    
 				// sets all the text boxes back to 0 in preparation for a new sale
-				txtB.setText("0");
-				txtMS.setText("0");
-				txtGB.setText("0");
-				txtP.setText("0");
-				txtLN.setText("0");
-				txtFF.setText("0");
-				txtMV.setText("0");
-				txtR.setText("0");
-				txtCS.setText("0");
-				txtBP.setText("0");
-				txtS.setText("0");
-				txtJ.setText("0");
-				txtBeer.setText("0");
-				txtM.setText("0");
-				txtW.setText("0");
-				txtSp.setText("0");
-				txtCB.setText("0");
-				txtChB.setText("0");
-				txtVS.setText("0");
-				txtCh.setText("0");
-				txtBC.setText("0");
-				txtSu.setText("0");
-				txtBR.setText("0");
-				txtSt.setText("0");
-				txtSa.setText("0");
-				txtPi.setText("0");
-				txtIC.setText("0");
-				txtC.setText("0");
-				txtCa.setText("0");
-				txtPu.setText("0");
-				txtSubtotal.setText("0");
-				txtTax.setText("0");
-				txtTotal.setText("0");
+				clear();
 				
 			}
 		});
@@ -1463,4 +1273,74 @@ DecimalFormat df = new DecimalFormat("####0.00");
 		lblHow.setBounds(32, 11, 110, 25);
 		frmLittleRestaurant.getContentPane().add(lblHow);
 	}
+	
+	//The following methods are for item prices that are the same amongst multiple items
+	
+	public static void calculate4() { //used for items costing $4 : Bruschetta, Pie, Cake
+		double subtotal = Double.parseDouble(txtSubtotal.getText()); 	//checks for number in subtotal
+		double price = subtotal + 4.00; 								//adds current price to subtotal
+		txtSubtotal.setText("" + df.format(price)); 					//displays new subtotal
+		
+		double tax = price * 0.13; 							//takes new subtotal and calculates tax
+		txtTax.setText("" + df.format(tax)); 				//displays new tax amount
+		
+		double total = price + tax; 						//sums new tax and subtotal amount
+		txtTotal.setText("" + df.format(total)); 			//displays new total
+		
+	}
+	public static void calculate5() { //used for items costing $5 : Perogies, Wine
+		double subtotal = Double.parseDouble(txtSubtotal.getText()); 	//checks for number in subtotal
+		double price = subtotal + 5.00; 								//adds current price to subtotal
+		txtSubtotal.setText("" + df.format(price)); 					//displays new subtotal
+		
+		double tax = price * 0.13; 							//takes new subtotal and calculates tax
+		txtTax.setText("" + df.format(tax)); 				//displays new tax amount
+		
+		double total = price + tax; 						//sums new tax and subtotal amount
+		txtTotal.setText("" + df.format(total)); 			//displays new total
+		
+	}
+	public static void calculate2() { //used for items costing $2 : FrenchFries Mixed Veggies, Rice, Ceasar Salad, Soda, Cookies
+		double subtotal = Double.parseDouble(txtSubtotal.getText()); 	//checks for number in subtotal
+		double price = subtotal + 2.00; 								//adds current price to subtotal
+		txtSubtotal.setText("" + df.format(price)); 					//displays new subtotal
+		
+		double tax = price * 0.13; 							//takes new subtotal and calculates tax
+		txtTax.setText("" + df.format(tax)); 				//displays new tax amount
+		
+		double total = price + tax; 						//sums new tax and subtotal amount
+		txtTotal.setText("" + df.format(total)); 			//displays new total
+		
+	}
+	public static void calculate3() { //used for items costing $3 : Baked Potatoe, Ice Cream, Pudding
+		double subtotal = Double.parseDouble(txtSubtotal.getText()); 	//checks for number in subtotal
+		double price = subtotal + 3.00; 								//adds current price to subtotal
+		txtSubtotal.setText("" + df.format(price)); 					//displays new subtotal
+		
+		double tax = price * 0.13; 							//takes new subtotal and calculates tax
+		txtTax.setText("" + df.format(tax)); 				//displays new tax amount
+		
+		double total = price + tax; 						//sums new tax and subtotal amount
+		txtTotal.setText("" + df.format(total)); 			//displays new total
+		
+	}
+	public static void calculate15() { //used for items costing $1.50 : Juice, Milk
+		double subtotal = Double.parseDouble(txtSubtotal.getText()); 	//checks for number in subtotal
+		double price = subtotal + 1.50; 								//adds current price to subtotal
+		txtSubtotal.setText("" + df.format(price)); 					//displays new subtotal
+		
+		double tax = price * 0.13; 							//takes new subtotal and calculates tax
+		txtTax.setText("" + df.format(tax)); 				//displays new tax amount
+		
+		double total = price + tax; 						//sums new tax and subtotal amount
+		txtTotal.setText("" + df.format(total)); 			//displays new total
+		
+	}
+	
+	
+	
+	
+	
+	
+	
 }
